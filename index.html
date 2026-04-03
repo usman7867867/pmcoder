@@ -1,110 +1,277 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes"/>
-<title>PM Coder | Advanced Build Studio</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-<style>
-  :root {
-    --bg-base: #09090b;
-    --bg-surface: #111113;
-    --bg-elevated: #18181b;
-    --bg-card: #1c1c1f;
-    --border: #27272a;
-    --border-bright: #3f3f46;
-    --text-primary: #fafafa;
-    --text-secondary: #a1a1aa;
-    --text-muted: #52525b;
-    --accent: #6366f1;
-    --accent-light: #818cf8;
-    --accent-glow: rgba(99,102,241,0.25);
-    --purple: #a855f7;
-    --purple-glow: rgba(168,85,247,0.2);
-    --green: #22c55e;
-    --green-glow: rgba(34,197,94,0.2);
-    --yellow: #eab308;
-    --red: #ef4444;
-    --cyan: #06b6d4;
-    --orange: #f97316;
-    --sidebar-w: 300px;
-    --editor-w: 42%;
-    --preview-w: calc(58% - 300px);
-    --header-h: 48px;
-    --font-ui: 'Inter', sans-serif;
-    --font-code: 'Fira Code', monospace;
-    --font-brand: 'Space Grotesk', sans-serif;
-    --radius: 8px;
-    --radius-lg: 12px;
-    --shadow-glow: 0 0 20px var(--accent-glow);
-    --transition: all 0.2s cubic-bezier(0.4,0,0.2,1);
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>SETTLE SMART</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg-primary: #f8fafc;
+            --bg-surface: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #334155;
+            --accent: #3b82f6;
+            --accent-dark: #2563eb;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --border: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --radius-lg: 1rem;
+            --radius-md: 0.75rem;
+        }
 
-  html, body {
-    height: 100%; width: 100%;
-    overflow: hidden;
-    font-family: var(--font-ui);
-    background: var(--bg-base);
-    color: var(--text-primary);
-    -webkit-font-smoothing: antialiased;
-  }
+        body.dark {
+            --bg-primary: #0f172a;
+            --bg-surface: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --border: #334155;
+        }
 
-  ::-webkit-scrollbar { width: 5px; height: 5px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 99px; }
-  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+            transition: background 0.2s, color 0.2s;
+        }
 
-  #app {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
-  }
+        /* App Layout */
+        .app-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--bg-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
 
-  #topbar {
-    height: var(--header-h);
-    min-height: var(--header-h);
-    background: var(--bg-surface);
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    padding: 0 16px;
-    gap: 12px;
-    z-index: 100;
-    flex-shrink: 0;
-    position: relative;
-  }
-  #topbar::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--accent), var(--purple), var(--cyan));
-  }
+        /* Header */
+        .app-header {
+            position: sticky;
+            top: 0;
+            background: var(--bg-surface);
+            backdrop-filter: blur(12px);
+            background: rgba(var(--bg-surface-rgb, 255,255,255), 0.85);
+            border-bottom: 1px solid var(--border);
+            padding: 0.75rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 20;
+        }
+        body.dark .app-header { background: rgba(30,41,59,0.9); }
+        .logo h1 { font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .tagline { font-size: 0.7rem; color: var(--text-secondary); }
+        .header-actions { display: flex; gap: 0.75rem; }
+        .icon-btn { background: none; border: none; font-size: 1.4rem; cursor: pointer; padding: 0.3rem; color: var(--text-primary); border-radius: 2rem; transition: 0.2s; }
 
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-family: var(--font-brand);
-    font-weight: 700;
-    font-size: 15px;
-    letter-spacing: -0.3px;
-    color: var(--text-primary);
-    flex-shrink: 0;
-  }
-  .brand-icon {
-    width: 28px; height: 28px;
-    background: linear-gradient(135deg, var(--accent), var(--purple));
-    border-radius: 7px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 13px;
-    color: #fff;
+        /* Main content */
+        .main-content {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            padding-bottom: 80px;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-surface);
+            border-radius: var(--radius-lg);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+        .glass-card {
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        body.dark .glass-card { background: rgba(30,41,59,0.7); }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-around;
+            padding: 0.5rem 0.75rem;
+            backdrop-filter: blur(16px);
+            z-index: 20;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: none;
+            border: none;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            gap: 0.2rem;
+            cursor: pointer;
+            transition: 0.2s;
+            padding: 0.4rem 0.8rem;
+            border-radius: 2rem;
+        }
+        .nav-item.active { color: var(--accent); background: rgba(59,130,246,0.1); font-weight: 500; }
+        .nav-icon { font-size: 1.5rem; }
+
+        /* Buttons */
+        .btn-primary { background: var(--accent); color: white; border: none; padding: 0.6rem 1rem; border-radius: 2rem; font-weight: 600; cursor: pointer; width: 100%; }
+        .btn-outline { background: transparent; border: 1px solid var(--accent); color: var(--accent); padding: 0.5rem 1rem; border-radius: 2rem; cursor: pointer; }
+
+        /* Checklist items */
+        .checklist-item { margin-bottom: 1rem; border-left: 4px solid var(--accent); padding-left: 0.75rem; }
+        .task-header { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; justify-content: space-between; }
+        .priority-badge { font-size: 0.7rem; background: var(--warning); padding: 0.2rem 0.5rem; border-radius: 1rem; color: #000; }
+
+        /* Progress */
+        .progress-bar { height: 8px; background: var(--border); border-radius: 1rem; overflow: hidden; margin: 0.5rem 0; }
+        .progress-fill { background: var(--accent); width: 0%; height: 100%; }
+
+        /* Utilities */
+        .flex-between { display: flex; justify-content: space-between; align-items: center; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+        .toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: #1e293b; color: white; padding: 0.5rem 1rem; border-radius: 2rem; z-index: 99; animation: fadeOut 2s forwards; }
+        @keyframes fadeOut { 0% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
+        input, select, textarea { background: var(--bg-surface); border: 1px solid var(--border); padding: 0.6rem; border-radius: 0.75rem; color: var(--text-primary); width: 100%; margin: 0.3rem 0; }
+        h2 { font-size: 1.5rem; margin: 0.5rem 0; }
+        h3 { font-size: 1.2rem; }
+        .empty-state { text-align: center; padding: 2rem; color: var(--text-secondary); }
+    </style>
+</head>
+<body>
+<div class="app-container" id="appRoot">
+    <div class="app-header">
+        <div class="logo"><h1>Settle Smart</h1><div class="tagline">Your first-week survival guide</div></div>
+        <div class="header-actions">
+            <button class="icon-btn" id="searchBtn" aria-label="Search">🔍</button>
+            <button class="icon-btn" id="settingsBtn" aria-label="Settings">⚙️</button>
+            <button class="icon-btn" id="themeToggle" aria-label="Dark mode">🌙</button>
+        </div>
+    </div>
+    <div class="main-content" id="mainContent"></div>
+    <div class="bottom-nav" id="bottomNav">
+        <button class="nav-item" data-screen="dashboard">🏠<span>Home</span></button>
+        <button class="nav-item" data-screen="checklistsHub">✅<span>Checklists</span></button>
+        <button class="nav-item" data-screen="guidesHub">📘<span>Guides</span></button>
+        <button class="nav-item" data-screen="budget">💰<span>Budget</span></button>
+        <button class="nav-item" data-screen="safety">🛡️<span>Safety</span></button>
+    </div>
+</div>
+<script>
+    // ----------------------------- DATA MODELS -----------------------------
+    const COUNTRIES = {
+        canada: { name: "Canada", emergency: { police: "911", ambulance: "911", fire: "911" }, simTip: "Get Public Mobile, Fido or Freedom eSIM", bankTip: "Use Tangerine or Simplii no-fee", transport: "Presto (ON) / Compass (BC)" },
+        uk: { name: "United Kingdom", emergency: { police: "999", ambulance: "999", fire: "999" }, simTip: "Giffgaff, Lebara or Voxi", bankTip: "Monzo, Starling or Revolut", transport: "Oyster (London) / contactless" },
+        usa: { name: "United States", emergency: { police: "911", ambulance: "911", fire: "911" }, simTip: "T-Mobile prepaid, Mint Mobile", bankTip: "Chime, Capital One 360", transport: "MetroCard / Clipper / Ventra" }
+    };
+    const CITIES = {
+        toronto: { name: "Toronto", country: "canada", budgetEst: 2800, transportNote: "PRESTO card, TTC monthly pass $156", housingNote: "Condos near Yonge, shared rooms $1000+" },
+        vancouver: { name: "Vancouver", country: "canada", budgetEst: 3000, transportNote: "Compass Card, monthly $110", housingNote: "Expensive, look at Burnaby/New West" },
+        london: { name: "London", country: "uk", budgetEst: 2200, transportNote: "Oyster card, daily cap £8.10", housingNote: "Zone 2/3 shared flats" },
+        manchester: { name: "Manchester", country: "uk", budgetEst: 1500, transportNote: "Bee Network, tram", housingNote: "Salford Quays affordable" },
+        newyork: { name: "New York", country: "usa", budgetEst: 3500, transportNote: "MetroCard OMNY, $132 monthly", housingNote: "Jersey City or Queens cheaper" },
+        losangeles: { name: "Los Angeles", country: "usa", budgetEst: 2900, transportNote: "TAP card, car needed", housingNote: "Shared in Koreatown" }
+    };
+    // Checklist Items for 7/30/90 days (each with required fields)
+    const checklistLibrary = {
+        day7: [
+            { id: "7_1", title: "Get a SIM Card", description: "Buy prepaid plan with data", whyMatters: "Stay connected, job hunt", estimatedCost: "$25-40", estimatedTime: "1 hour", priority: "High", tips: "Bring passport", documents: "Passport/Visa" },
+            { id: "7_2", title: "Open a Bank Account", description: "Basic no-fee account", whyMatters: "Receive salary, pay rent", estimatedCost: "$0", estimatedTime: "2 hours", priority: "High", tips: "Compare online banks", documents: "Passport, proof of address" },
+            { id: "7_3", title: "Learn Emergency Numbers", description: "Memorize police, ambulance", whyMatters: "Life saving", estimatedCost: "$0", estimatedTime: "15 min", priority: "Critical", tips: "Save on phone", documents: "None" },
+            { id: "7_4", title: "Buy Groceries & Essentials", description: "Find nearby supermarket", whyMatters: "Save money eating out", estimatedCost: "$50", estimatedTime: "1 hour", priority: "Medium", tips: "Discount stores like Aldi", documents: "None" }
+        ],
+        day30: [
+            { id: "30_1", title: "Find Stable Housing", description: "Sign lease for 6+ months", whyMatters: "Safety & stability", estimatedCost: "$800-2000", estimatedTime: "1 week", priority: "High", tips: "Never pay before viewing", documents: "ID, employment letter" },
+            { id: "30_2", title: "Register for Healthcare", description: "Apply for health card/insurance", whyMatters: "Avoid huge medical bills", estimatedCost: "$0", estimatedTime: "2 hours", priority: "High", tips: "Check provincial/NHS/ACA", documents: "Visa, proof of address" },
+            { id: "30_3", title: "Build Monthly Budget", description: "Track income/expenses", whyMatters: "Survive financially", estimatedCost: "$0", estimatedTime: "1 hour", priority: "Medium", tips: "Use budget planner inside app", documents: "None" }
+        ],
+        day90: [
+            { id: "90_1", title: "Understand Credit Score", description: "Build credit history", whyMatters: "Future loans, rental", estimatedCost: "$0", estimatedTime: "30 min", priority: "Medium", tips: "Get secured credit card", documents: "ID" },
+            { id: "90_2", title: "Build Local Network", description: "Join meetups/events", whyMatters: "Support system", estimatedCost: "$0", estimatedTime: "ongoing", priority: "Low", tips: "Facebook groups", documents: "None" }
+        ]
+    };
+    let allChecklistItems = [...checklistLibrary.day7, ...checklistLibrary.day30, ...checklistLibrary.day90];
+    // App state
+    let appState = {
+        onboardingDone: false,
+        country: "canada",
+        city: "toronto",
+        profileType: "worker",
+        arrivalDate: new Date().toISOString().slice(0,10),
+        language: "en",
+        offlineMode: true,
+        checklistProgress: {},  // id -> {completed, notes, favorited}
+        notes: [], // {id, text, reminderDate, completed}
+        favorites: [], // ids of favorited checklist items or resources
+        budget: { rent: 1200, food: 400, transport: 100, mobile: 40, healthcare: 50, emergency: 200, jobcost: 30, misc: 100 },
+        emergencyCard: { name: "", phone: "", address: "", medical: "", blood: "" },
+        darkMode: false
+    };
+    let currentScreen = "dashboard";
+    function saveState() { localStorage.setItem("settleSmart", JSON.stringify(appState)); }
+    function loadState() {
+        const saved = localStorage.getItem("settleSmart");
+        if(saved) { const parsed = JSON.parse(saved); Object.assign(appState, parsed); if(appState.darkMode) document.body.classList.add("dark"); else document.body.classList.remove("dark"); }
+        if(!appState.checklistProgress) appState.checklistProgress = {};
+        if(!appState.notes) appState.notes = [];
+        if(!appState.favorites) appState.favorites = [];
+        if(!appState.budget) appState.budget = { rent: 1200, food: 400, transport: 100, mobile: 40, healthcare: 50, emergency: 200, jobcost: 30, misc: 100 };
+    }
+    function showToast(msg) { let t = document.createElement("div"); t.className = "toast"; t.innerText = msg; document.body.appendChild(t); setTimeout(()=>t.remove(), 2000); }
+    // Helper: days since arrival
+    function daysSinceArrival() { const diff = new Date() - new Date(appState.arrivalDate); return Math.floor(diff / (1000 * 60 * 60 * 24)); }
+    // Screens Rendering
+    function render() {
+        if(!appState.onboardingDone) { renderOnboarding(); return; }
+        const screens = { dashboard, checklistsHub, guidesHub, budgetScreen, safetyScreen, searchScreen, settingsScreen, notesScreen, savedScreen, cityGuideScreen, simGuideScreen, bankingGuideScreen, housingGuideScreen, jobKitScreen, appsMistakesScreen, checklistDetailsScreen };
+        if(screens[currentScreen]) screens[currentScreen]();
+        else dashboard();
+    }
+    function renderOnboarding() { document.getElementById("mainContent").innerHTML = `<div class="card"><h2>Welcome to Settle Smart 🌍</h2><p>Let's personalize your survival guide</p><select id="onboardCountry"><option value="canada">Canada</option><option value="uk">UK</option><option value="usa">USA</option></select><select id="onboardCity"></select><select id="onboardProfile"><option value="student">Student</option><option value="worker">Worker</option><option value="immigrant">Immigrant</option><option value="tourist">Tourist</option><option value="family">Family</option><option value="jobSeeker">Job Seeker</option></select><input type="date" id="arrivalDate" value="${new Date().toISOString().slice(0,10)}"><button class="btn-primary" id="finishOnboarding">Start my journey →</button></div>`;
+        const countrySelect = document.getElementById("onboardCountry"); const citySelect = document.getElementById("onboardCity");
+        function updateCities() { const country = countrySelect.value; const filtered = Object.values(CITIES).filter(c=>c.country===country); citySelect.innerHTML = filtered.map(c=>`<option value="${c.name.toLowerCase()}">${c.name}</option>`).join(""); if(filtered.length) citySelect.value = filtered[0].name.toLowerCase(); }
+        countrySelect.addEventListener("change", updateCities); updateCities();
+        document.getElementById("finishOnboarding").onclick = () => { appState.onboardingDone=true; appState.country = countrySelect.value; appState.city = citySelect.value; appState.profileType = document.getElementById("onboardProfile").value; appState.arrivalDate = document.getElementById("arrivalDate").value; saveState(); currentScreen="dashboard"; render(); };
+    }
+    // Dashboard
+    function dashboard() {
+        const days = daysSinceArrival(); const countryObj = COUNTRIES[appState.country]; const cityObj = CITIES[appState.city] || CITIES.toronto;
+        let completedCount = Object.values(appState.checklistProgress).filter(p=>p.completed).length;
+        let totalTasks = allChecklistItems.length; let percent = Math.round((completedCount/totalTasks)*100)||0;
+        document.getElementById("mainContent").innerHTML = `
+            <div class="card"><div class="flex-between"><h2>👋 Welcome, ${appState.profileType}</h2><span>📅 Day ${days>=0?days:0}</span></div><p>📍 ${countryObj.name} · ${cityObj.name}</p><div class="progress-bar"><div class="progress-fill" style="width:${percent}%"></div></div><p>✅ ${completedCount}/${totalTasks} tasks done</p></div>
+            <div class="card"><h3>🚀 Urgent Next Step</h3><p>${days<7 ? "Get SIM & bank account ASAP" : days<30 ? "Secure housing & healthcare" : "Build credit & network"}</p><button class="btn-primary" id="gotoChecklist">Go to 7-day checklist</button></div>
+            <div class="card"><h3>⚠️ Safety Alert</h3><p>Never pay deposits without seeing property. Verify landlord identity.</p><button class="btn-outline" id="safetyBtn">View Scam Warnings</button></div>
+            <div class="card"><h3>📌 Today’s Suggestion</h3><p>${days<7 ? "Buy a local SIM and register for public transport card" : days<30 ? "Visit nearest bank branch to finalize account" : "Join local Facebook group for newcomers"}</p></div>
+            <div class="card"><h3>⭐ Saved items</h3><p>${appState.favorites.length} favorites · <button id="viewSavedBtn" class="icon-btn">View</button></p></div>
+        `;
+        document.getElementById("gotoChecklist")?.addEventListener("click",()=>{ currentScreen="checklistsHub"; render(); });
+        document.getElementById("safetyBtn")?.addEventListener("click",()=>{ currentScreen="safetyScreen"; render(); });
+        document.getElementById("viewSavedBtn")?.addEventListener("click",()=>{ currentScreen="savedScreen"; render(); });
+    }
+    // Checklists hub with 7/30/90 tabs
+    function checklistsHub() { let phase = "day7"; function renderChecklist(phaseKey) { const items = checklistLibrary[phaseKey] || []; let html = `<div class="flex-between"><div class="tab-buttons">${["day7","day30","day90"].map(p=>`<button class="${phaseKey===p?'btn-primary':'btn-outline'}" data-phase="${p}">${p==='day7'?'First 7 Days':p==='day30'?'30 Days':'90 Days'}</button>`).join("")}</div></div>`; items.forEach(item=>{ const prog = appState.checklistProgress[item.id] || {completed:false, notes:""}; html+=`<div class="checklist-item"><div class="task-header"><strong>${item.title}</strong><span class="priority-badge">${item.priority}</span><button class="favBtn" data-id="${item.id}">${appState.favorites.includes(item.id)?"❤️":"🤍"}</button></div><p>${item.description}</p><small>💰 ${item.estimatedCost} · ⏱️ ${item.estimatedTime}<br>💡 ${item.tips}</small><div class="flex-between"><label><input type="checkbox" class="completeCheck" data-id="${item.id}" ${prog.completed?"checked":""}> Mark done</label><button class="noteBtn" data-id="${item.id}">📝 Note</button></div>${prog.notes?`<small>📌 Note: ${prog.notes}</small>`:""}</div>`; }); document.getElementById("mainContent").innerHTML = html; attachChecklistEvents(phaseKey); }
+        function attachChecklistEvents(phaseKey) { document.querySelectorAll(".completeCheck").forEach(cb=>cb.addEventListener("change",(e)=>{ const id=e.target.dataset.id; if(!appState.checklistProgress[id])appState.checklistProgress[id]={}; appState.checklistProgress[id].completed=e.target.checked; saveState(); renderChecklist(phaseKey); showToast("Progress saved"); })); document.querySelectorAll(".favBtn").forEach(btn=>btn.addEventListener("click",(e)=>{ const id=btn.dataset.id; if(appState.favorites.includes(id))appState.favorites=appState.favorites.filter(f=>f!==id); else appState.favorites.push(id); saveState(); renderChecklist(phaseKey); })); document.querySelectorAll(".noteBtn").forEa    color: #fff;
     box-shadow: 0 0 12px var(--accent-glow);
   }
   .brand-name { background: linear-gradient(90deg, var(--accent-light), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
